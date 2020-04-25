@@ -1,14 +1,14 @@
 from flask import render_template,request,redirect,url_for
-# from app import app
 from . import main
 from ..requests import get_movies,get_movie,search_movie
-# from .models import reviews
 from .forms import ReviewForm
 from ..models import Review
-# Review = reviews.Review
+
+
+
+
 
 # Views
-
 @main.route('/')
 def index():
 
@@ -26,7 +26,7 @@ def index():
     search_movie = request.args.get('movie_query')
 
     if search_movie:
-        return redirect(url_for('search',movie_name=search_movie))
+        return redirect(url_for('.search',movie_name=search_movie))
     else:
         return render_template('index.html', title = title, popular = popular_movies, upcoming = upcoming_movie, now_showing = now_showing_movie )
 
@@ -71,7 +71,7 @@ def new_review(id):
         new_review = Review(movie.id,title,movie.poster,review)
         new_review.save_review()
 
-        return redirect(url_for('movie',id = movie.id ))
+        return redirect(url_for('.movie',id = movie.id ))
 
     title = f'{movie.title} review'
     return render_template('new_review.html',title = title, review_form=form, movie=movie)
